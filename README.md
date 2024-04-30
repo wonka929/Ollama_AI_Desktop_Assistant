@@ -52,7 +52,9 @@ There are 5 functions right now, but everything is just determinated by the prom
 As per default behaviour SumUp, Explain, Rewrite and Check take as input the content of the clipboard.
 So while you suft the internet or do your job on documents or else you can just ctrl + c,  F7 and select the function you want the model to perform.
 
-video here
+
+https://github.com/wonka929/Ollama_AI_Desktop_Assistant/assets/14088894/dea8623c-87a3-4a4d-9caa-125241fdc784
+
 
 Easy peasy. Enjoy.
 
