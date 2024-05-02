@@ -62,7 +62,7 @@ What I woud add?
 
 * I couldn't stream the output of the request to the interface word by word but just everything at the end. I'm not sure i can do it differently, it should be an asyncronous behaviour. 
 
-* Find the perfect prompt to make the LLM perform its actions based on the original language of the text copied. I'm still trying to figure out a functioning prompt.
+* ~~Find the perfect prompt to make the LLM perform its actions based on the original language of the text copied. I'm still trying to figure out a functioning prompt.~~
 
 Feel free to contribute. 
 As I said I'm not a programmer, pretty sure many of you can improve my ideas.
