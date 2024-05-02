@@ -15,9 +15,7 @@ def kill_previous_and_run():
     current_pid = os.getpid()
 
     # Cerca processi in esecuzione con il nome 'GnomeOllama.py'
-    result = subprocess.run(
-        ["pgrep", "-f", "OllamaAssistant.py"], stdout=subprocess.PIPE
-    )
+    result = subprocess.run(["pgrep", "-f", "OllamaAssistant.py"], stdout=subprocess.PIPE)
     pids = result.stdout.decode().split()
 
     # Se esistono tali processi, uccidi quelli con PID inferiore a quello corrente
@@ -43,7 +41,7 @@ def send_to_LLM(prompt, from_clipboard=False):
     else:
         copied_text = ""
 
-    data = {"model": "phi3", "prompt": prompt + copied_text}
+    data = {"model": "phi3:3.8b", "prompt": prompt + copied_text}
 
     # Inserisci il prompt nella zona di testo
     text_area.insert(
@@ -77,22 +75,20 @@ def send_text(option):
 
     # Invia il testo all'API selezionando l'opzione corrispondente
     if option == "Riassumi il testo":
-        send_to_LLM("Riassumi questo testo in italiano: ", from_clipboard=True)
+        send_to_LLM("Sum up the text, riassumi il testo: \n", from_clipboard=True)
         # Codice per inviare il testo all'API per il riassunto
         pass
     elif option == "Spiega":
         # Codice per inviare il testo all'API per la spiegazione
-        send_to_LLM("Spiega questo testo in italiano: ", from_clipboard=True)
+        send_to_LLM("Explain this text, spiega questo testo: ", from_clipboard=True)
         pass
     elif option == "Rifromula":
         # Codice per inviare il testo all'API per la rifromulazione
-        send_to_LLM("Rifromula questo testo in italiano: ", from_clipboard=True)
+        send_to_LLM("Rephrase this text, rifromula questo testo: ", from_clipboard=True)
         pass
     elif option == "Controlla la grammatica":
         # Codice per inviare il testo all'API per la rifromulazione
-        send_to_LLM(
-            "Controlla la grammatica di questo testo in italiano: ", from_clipboard=True
-        )
+        send_to_LLM("Check the spelling, controlla la grammatica: ", from_clipboard=True)
         pass
     else:
         # Codice per inviare il testo all'API per la generazione di testo

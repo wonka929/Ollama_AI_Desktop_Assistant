@@ -66,3 +66,13 @@ What I woud add?
 
 Feel free to contribute. 
 As I said I'm not a programmer, pretty sure many of you can improve my ideas.
+
+
+
+
+
+#### Release notes:
+
+30/04/2024: initial release
+
+02/05/2024: changed the model from phi3 (which is instruct) to phi3:3.8b which is general. In addition i think i've found the correct prompt to use automatically english or italian
