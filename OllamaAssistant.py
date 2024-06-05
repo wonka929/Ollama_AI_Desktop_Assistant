@@ -15,7 +15,9 @@ def kill_previous_and_run():
     current_pid = os.getpid()
 
     # Cerca processi in esecuzione con il nome 'GnomeOllama.py'
-    result = subprocess.run(["pgrep", "-f", "OllamaAssistant.py"], stdout=subprocess.PIPE)
+    result = subprocess.run(
+        ["pgrep", "-f", "OllamaAssistant.py"], stdout=subprocess.PIPE
+    )
     pids = result.stdout.decode().split()
 
     # Se esistono tali processi, uccidi quelli con PID inferiore a quello corrente
@@ -24,7 +26,7 @@ def kill_previous_and_run():
             subprocess.run(["kill", "-9", pid])
 
     # Esegui il tuo script
-    subprocess.run(["python3", "GnomeOllama.py"])
+    subprocess.run(["python3", "OllamaAssistant.py"])
 
 
 # Utilizza la funzione
@@ -41,7 +43,8 @@ def send_to_LLM(prompt, from_clipboard=False):
     else:
         copied_text = ""
 
-    data = {"model": "phi3:3.8b", "prompt": prompt + copied_text}
+    data = {"model": "phi3:mini-128k", "prompt": prompt.replace("--context--", copied_text)}
+    print(data)
 
     # Inserisci il prompt nella zona di testo
     text_area.insert(
@@ -69,26 +72,39 @@ def send_to_LLM(prompt, from_clipboard=False):
         root.update()
 
 
-def send_text(option):
+def send_text(option, RAG=False):
 
     p.pack()
 
     # Invia il testo all'API selezionando l'opzione corrispondente
     if option == "Riassumi il testo":
-        send_to_LLM("Sum up the text, riassumi il testo: \n", from_clipboard=True)
+        send_to_LLM("Sum up the text, riassumi il testo: \n --context--", from_clipboard=True)
         # Codice per inviare il testo all'API per il riassunto
         pass
     elif option == "Spiega":
         # Codice per inviare il testo all'API per la spiegazione
-        send_to_LLM("Explain this text, spiega questo testo: ", from_clipboard=True)
+        send_to_LLM("Explain this text, spiega questo testo: --context--", from_clipboard=True)
         pass
     elif option == "Rifromula":
         # Codice per inviare il testo all'API per la rifromulazione
-        send_to_LLM("Rephrase this text, rifromula questo testo: ", from_clipboard=True)
+        send_to_LLM("Rephrase this text, rifromula questo testo: --context--", from_clipboard=True)
         pass
     elif option == "Controlla la grammatica":
         # Codice per inviare il testo all'API per la rifromulazione
-        send_to_LLM("Check the spelling, controlla la grammatica: ", from_clipboard=True)
+        send_to_LLM(
+            "Check the spelling, controlla la grammatica: --context--", from_clipboard=True
+        )
+        pass
+    elif RAG == True:
+        # Codice per inviare il testo all'API per la rifromulazione
+        send_to_LLM(
+            """Use the following pieces of context to answer the question at the end.
+    If you don't know the answer, just say that you don't know, don't try to make up an answer.
+    Use three sentences maximum and keep the answer as concise as possible.
+    --context--
+    Question: {}
+    Helpful Answer:""".format(option) , from_clipboard=True
+        )
         pass
     else:
         # Codice per inviare il testo all'API per la generazione di testo
@@ -151,6 +167,12 @@ input_text.pack(side=tk.LEFT, fill=tk.X, expand=True)
 # Crea il pulsante di invio
 send_button = tk.Button(
     input_frame, text="Invia", command=lambda: send_text(input_text.get())
+)
+send_button.pack(side=tk.RIGHT)
+
+# Crea il pulsante di invio
+send_button = tk.Button(
+    input_frame, text="RAG", command=lambda: send_text(input_text.get(), RAG=True)
 )
 send_button.pack(side=tk.RIGHT)
 
