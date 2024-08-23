@@ -43,7 +43,7 @@ def send_to_LLM(prompt, from_clipboard=False):
     else:
         copied_text = ""
 
-    data = {"model": "phi3:mini-128k", "prompt": prompt.replace("--context--", copied_text)}
+    data = {"model": "gemma2:2b", "prompt": prompt.replace("--context--", copied_text)}
     print(data)
 
     # Inserisci il prompt nella zona di testo
@@ -78,27 +78,28 @@ def send_text(option, RAG=False):
 
     # Invia il testo all'API selezionando l'opzione corrispondente
     if option == "Riassumi il testo":
-        send_to_LLM("Sum up the text, riassumi il testo: \n --context--", from_clipboard=True)
+        send_to_LLM("Respond using the same language of the text. Sum up the text: \n --context--", from_clipboard=True)
         # Codice per inviare il testo all'API per il riassunto
         pass
     elif option == "Spiega":
         # Codice per inviare il testo all'API per la spiegazione
-        send_to_LLM("Explain this text, spiega questo testo: --context--", from_clipboard=True)
+        send_to_LLM("Respond using the same language of the text. Explain this text: --context--", from_clipboard=True)
         pass
     elif option == "Rifromula":
         # Codice per inviare il testo all'API per la rifromulazione
-        send_to_LLM("Rephrase this text, rifromula questo testo: --context--", from_clipboard=True)
+        send_to_LLM("Respond using the same language of the text. Rephrase this text: --context--", from_clipboard=True)
         pass
     elif option == "Controlla la grammatica":
         # Codice per inviare il testo all'API per la rifromulazione
         send_to_LLM(
-            "Check the spelling, controlla la grammatica: --context--", from_clipboard=True
+            "Respond using the same language of the text. Check the spelling: --context--", from_clipboard=True
         )
         pass
     elif RAG == True:
         # Codice per inviare il testo all'API per la rifromulazione
         send_to_LLM(
-            """Use the following pieces of context to answer the question at the end.
+            """Respond using the same language of the text.
+    Use the following pieces of context to answer the question at the end.
     If you don't know the answer, just say that you don't know, don't try to make up an answer.
     Use three sentences maximum and keep the answer as concise as possible.
     --context--
